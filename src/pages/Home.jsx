@@ -2,7 +2,7 @@ import React from 'react'
 import { Categories, SortPopup,PizzaBlock } from '../components';
 import {useSelector,useDispatch} from 'react-redux';
 import {setCategory} from'../redux/actions/filters.js';
-
+import {fetchPizzas} from '../redux/actions/pizzas.js';
 
 
 function Home() {
@@ -10,6 +10,13 @@ function Home() {
   const dispatch = useDispatch();
   const items = useSelector(({pizzas})=>pizzas.items);
   
+  React.useEffect(() => {
+   
+      dispatch(fetchPizzas())
+    
+    
+  }, []);
+
     return (
       
         <div className="container">
