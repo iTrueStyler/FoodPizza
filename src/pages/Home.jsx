@@ -6,7 +6,7 @@ import {
   PizzaLoadingBlock,
 } from '../components';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategory } from '../redux/actions/filters.js';
+import { setCategory, setSortBy } from '../redux/actions/filters.js';
 import { fetchPizzas } from '../redux/actions/pizzas.js';
 
 function Home() {
@@ -17,8 +17,13 @@ function Home() {
   
 
   React.useEffect(() => {
-    dispatch(fetchPizzas())
-  }, [category]);
+    dispatch(fetchPizzas(sortBy,category))
+  }, [category,sortBy]);
+
+
+  const onSelectSortType = React.useCallback((type)=>{
+    dispatch(setSortBy(type));
+  },[])
 
   return (
     <div className="container">
@@ -29,11 +34,13 @@ function Home() {
           items={['Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']}
         />
         <SortPopup
+        activeSortType={sortBy.type}
           items={[
-            { name: 'популярности', type: 'popular' },
-            { name: 'цене', type: 'price' },
-            { name: 'алфавит', type: 'alphabet' },
+            { name: 'популярности', type: 'popular',order:'desc' },
+            { name: 'цене', type: 'price',order:'desc' },
+            { name: 'алфавит', type: 'name',order:'asc' },
           ]}
+          onClickSortType={onSelectSortType}
         />
       </div>
 

@@ -1,11 +1,11 @@
 import React,{useEffect, useState,useRef} from 'react';
-
-function SortPopup({items}=[]) {
+import PropTypes from 'prop-types';
+function SortPopup({items,onClickSortType,activeSortType}) {
 
     const [visiblePopup,setVisiblePopup] = useState(false);
-    const [activeItem,setActiveItem] = useState(0);
+   
     const sortRef = useRef(null);
-    const activeLabel = items[activeItem].name;
+    const activeLabel = items.find(obj=>obj.type===activeSortType).name;
     
 
     const toogleVisiblePopup = ()=>{
@@ -20,7 +20,9 @@ function SortPopup({items}=[]) {
     };
     
     const onSelectItem = (index)=>{
-        setActiveItem(index);
+      if(onClickSortType){
+        onClickSortType(index)
+      }
         setVisiblePopup(false);
     };
 
@@ -52,8 +54,8 @@ function SortPopup({items}=[]) {
               <ul>
               {items.map((obj,index) => (
             <li 
-            className={activeItem===index?'active':''}
-            onClick = {()=>onSelectItem(index)}
+            className={activeSortType===obj.type?'active':''}
+            onClick = {()=>onSelectItem(obj)}
             key={`${obj.type}_${index}`}>{obj.name}</li>
           ))}
               </ul>
@@ -61,5 +63,7 @@ function SortPopup({items}=[]) {
           </div>
     )
 }
-
+SortPopup.defaultProps={
+    items:[],
+};
 export default SortPopup;

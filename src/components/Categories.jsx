@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 
 function Categories({items=[],onClickCategory ,activeCategory}) {
 
-    
-
-    const onSelectItem =(index)=>{
-      
-      onClickCategory(index);
-    };
-
   
   return (
     <div>
@@ -17,11 +10,11 @@ function Categories({items=[],onClickCategory ,activeCategory}) {
         <ul>
           <li 
           className={activeCategory===null?'active':''}
-          onClick = {()=>onSelectItem(null)} >Все</li>
+          onClick = {()=>onClickCategory(null)} >Все</li>
           {items.map((name,index) => (
             <li 
             className={activeCategory===index?'active':''}
-            onClick = {()=>onSelectItem(index)}
+            onClick = {()=>onClickCategory(index)}
             key={`${name}_${index}`}>{name}</li>
           ))}
         </ul>
@@ -32,8 +25,8 @@ function Categories({items=[],onClickCategory ,activeCategory}) {
 
 
 Categories.propTypes = {
-  activeCategory: PropTypes.number.isRequired,
-  items:PropTypes.arrayOf(PropTypes.object),
+  activeCategory: PropTypes.oneOf([PropTypes.number,null]),
+  items:PropTypes.arrayOf(PropTypes.string),
   onClickCategory:PropTypes.func
 
 };
