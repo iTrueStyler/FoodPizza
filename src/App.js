@@ -2,9 +2,8 @@ import React from 'react';
 import Header from './components/Header.jsx';
 import { Home, Cart } from './pages';
 import { Route } from 'react-router-dom';
-import axios from 'axios';
-import {fetchPizzas} from './redux/actions/pizzas.js';
-import {useSelector, useDispatch} from 'react-redux';
+
+import { useDispatch} from 'react-redux';
 
 
 
